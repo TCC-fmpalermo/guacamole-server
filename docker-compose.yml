@@ -1,0 +1,25 @@
+services:
+  guacd:
+    image: guacamole/guacd
+    container_name: guacd
+    restart: unless-stopped
+    ports:
+      - "4822:4822"
+    networks:
+      - guac-server-networks
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm restart
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - guac-server-networks
+    depends_on:
+      - guacd
+networks:
+  guac-server-networks:
+    driver: bridge   
