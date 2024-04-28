@@ -4,7 +4,7 @@ services:
     container_name: guacd
     restart: unless-stopped
     ports:
-      - "4822:4822"
+      - "${GUACD_PORT:-4822}:4822"
     networks:
       - guac-server-networks
   server:
@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile
     command: npm restart
     ports:
-      - "8080:8080"
+      - "${APP_PORT:-8080}:8080"
     volumes:
       - .:/usr/src/app
     networks:
